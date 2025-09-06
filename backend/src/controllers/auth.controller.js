@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken"
 import User from "../models/user.model.js"
+import { upsertStreamUser } from "../lib/stream.js";
 
 export async function signup(req, res) {
 
@@ -53,6 +54,18 @@ export async function signup(req, res) {
 
         //create JWT token 
         // create the user in stream as well 
+
+        try {
+            await upsertStreamUser({
+                id: newUser._id.toString(),
+                name: newUser.fullName,
+                image: newUser.profilePick || "",
+            })
+            console.log("Creating Stream user ", newUser.fullName);
+
+        } catch (error) {
+            console.log("error while creating Stream user ", error)
+        }
 
         const token = jwt.sign({
             userId: newUser._id, // payload
@@ -143,4 +156,75 @@ export async function logout(req, res) {
         success: true,
         message: "LogOut SuccessFully"
     })
+}
+
+export async function onboard(req, res) {
+    console.log(req.user);
+
+    // create on board method
+    try {
+        const userId = req.user._id;
+
+
+        const { fullName, bio, nativeLanguage, learningLanguage, location } = req.body
+
+        if (!fullName || !bio || !nativeLanguage || !learningLanguage || !location) {
+
+            return res.status(400).json({
+                message: "All field are required",
+                missingFeilds: [
+                    !fullName && "fullName",
+                    !bio && "bio",
+                    !nativeLanguage && "nativeLanguage",
+                    !learningLanguage && "learningLanguage",
+                    !location && "location"
+                ].filter(Boolean) // only get the true values
+
+            });
+        }
+
+        //updated the user onboarded detail
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            ...req.body,
+            isOnboarded: true
+        }, {
+            new: true
+        })
+
+
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                message: "User does not found"
+            })
+        }
+
+        //TODO update the user info into Stream
+
+
+        try {
+            await upsertStreamUser({
+                id: updatedUser._id.toString(),
+                name: updatedUser.fullName,
+                image: updatedUser.profilePick || ""
+            })
+
+            console.log(`steam user updated after oonboarding for &${updatedUser.fullName}`)
+        } catch (streamError) {
+            console.log(`Error while updating stream User after oonboarding ${streamError.message}`)
+        }
+
+        res.status(200).json({
+            success: true,
+            user: updatedUser
+        })
+
+
+    } catch (error) {
+        console.log("Onboarding Error")
+        res.status(500).json({
+            message: "Internal server Error"
+        })
+    }
+
 }
