@@ -10,7 +10,7 @@ router.post("/login", login)
 
 router.post("/logout", logout)
 
-router.post("/onboard", protectedRoute, onboard)
+router.post("/onboarding", protectedRoute, onboard)
 
 
 //checed user is logged in or not 

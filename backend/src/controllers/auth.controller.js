@@ -49,7 +49,7 @@ export async function signup(req, res) {
             email,
             fullName,
             password,
-            profilePick: randomAvatar,
+            profilepic: randomAvatar,
         });
 
         //create JWT token 
@@ -59,7 +59,7 @@ export async function signup(req, res) {
             await upsertStreamUser({
                 id: newUser._id.toString(),
                 name: newUser.fullName,
-                image: newUser.profilePick || "",
+                image: newUser.profilepic || "",
             })
             console.log("Creating Stream user ", newUser.fullName);
 
@@ -206,7 +206,7 @@ export async function onboard(req, res) {
             await upsertStreamUser({
                 id: updatedUser._id.toString(),
                 name: updatedUser.fullName,
-                image: updatedUser.profilePick || ""
+                image: updatedUser.profilepic || ""
             })
 
             console.log(`steam user updated after oonboarding for &${updatedUser.fullName}`)
