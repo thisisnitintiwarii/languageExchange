@@ -77,7 +77,7 @@ const ChatPage = () => {
 
   const handleVideoCall = () => {
     if (channel) {
-      const callUrl = `${window.location.origin}/call/${channel.id}`;
+      const callUrl = `https://languageexchange-1.onrender.com/call/${channel.id}`;
 
       channel.sendMessage({
         text:`I'have started a video call. Join me here: ${callUrl}`
