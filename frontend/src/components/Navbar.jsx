@@ -55,11 +55,13 @@ const Navbar = () => {
 
           <div className="avatar">
             <div className="w-9 rounded-full">
-              <img
-                src={authUser?.profilepic}
-                alt="User Avatar"
-                rel="noreferrer"
-              />
+              <Link to={"/"}>
+                <img
+                  src={authUser?.profilepic}
+                  alt="User Avatar"
+                  rel="noreferrer"
+                />
+              </Link>
             </div>
           </div>
 
