@@ -168,7 +168,7 @@ export async function getFriendRequests(req, res) {
 
     const acceptedReqs = await friendRequest
       .find({
-        recipient: req.user.id,
+        sender: req.user.id,
         status: "accepted",
       })
       .populate("recipient", "fullName profilepic ");
