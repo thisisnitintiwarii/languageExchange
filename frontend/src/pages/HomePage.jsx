@@ -92,7 +92,7 @@ const HomePage = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                  Meet New Learners
+                  Explore New Friends
                 </h2>
                 <p className="opacity-70">
                   Discover perfect language exchange partners based on your
@@ -128,7 +128,7 @@ const HomePage = () => {
                     <div className="card-body p-5 space-y-4">
                       <div className="flex items-center gap-3">
                         <div className="avatar size-16 rounded-full">
-                          <img src={user.profilePic} alt={user.fullName} />
+                          <img src={user.profilepic} alt={user.fullName} />
                         </div>
 
                         <div>
