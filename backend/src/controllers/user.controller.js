@@ -171,7 +171,7 @@ export async function getFriendRequests(req, res) {
         recipient: req.user.id,
         status: "accepted",
       })
-      .populate("sender", "fullName profilepic ");
+      .populate("recipient", "fullName profilepic ");
 
     res.status(200).json({
       incomingReqs,
