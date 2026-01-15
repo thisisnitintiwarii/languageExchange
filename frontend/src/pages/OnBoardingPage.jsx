@@ -44,8 +44,8 @@ const OnBoardingPage = () => {
   };
 
   const handleRandomAvatar = () => {
-    const idx = Math.floor(Math.random() * 100) + 1;
-    const randomAvatar = `https://avatar.iran.liara.run/public/${idx}.png`;
+const random = Math.floor(Math.random() * 1000);
+const randomAvatar = `https://api.dicebear.com/7.x/adventurer/svg?seed=${random}`;
 
     setFormState({
       ...formState,
